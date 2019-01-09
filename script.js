@@ -52,16 +52,19 @@ function getMatches(){
 }
 function populateMatchesList(matchday){
     // Remove all the previous items
-    $('#stationList li').remove();
+    $('#matchList li').remove();
     console.log('Current matchday view: ' + matchday)
     var currentMatches = matches[matchday];
     currentMatches.forEach(currentMatch => {
-        $('#stationList').append(
-            '<li>' + currentMatch['homeTeam']['name'] + ' vs ' + currentMatch['awayTeam']['name'] + '</li>'
+        $('#matchList').append(
+            '<li><a href="#">' + 
+            '<p><span class="team-name">' + currentMatch['homeTeam']['name'] + '</span><span class="score">' + currentMatch['score']['fullTime']['homeTeam'] + '</span></p>' +
+            '<p><span class="team-name">' + currentMatch['awayTeam']['name'] + '</span><span class="score">' + currentMatch['score']['fullTime']['homeTeam'] + '</span></p>' +
+            '</a></li>'
         )
     });
     // Refresh the list (important)
-    $('#stationList').listview('refresh');
+    $('#matchList').listview('refresh');
 }
 
 $.when(getMatches()).done(function(data, textStatus, jqXHR){
@@ -71,11 +74,11 @@ $.when(getMatches()).done(function(data, textStatus, jqXHR){
 
 function generateList(stations){
     // Remove all the previous items
-    $('#stationList li').remove();
+    $('#matchList li').remove();
     
     $.each(stations, function(index, station){
         console.log(station.name);
-        $('#stationList').append(
+        $('#matchList').append(
             '<li><h2>' + station.name + '</h2>' + 
             '<p>Province: ' + station.province + '</p>' +
             '<p>Last updated: ' + station.date + '</p>' +
@@ -85,7 +88,7 @@ function generateList(stations){
     })
     
     // Refresh the list (important)
-    $('#stationList').listview('refresh');
+    $('#matchList').listview('refresh');
 }
 
 // Refresh button event
