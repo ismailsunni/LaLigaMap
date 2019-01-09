@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <meta charset="utf-8"/>
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+        <link rel="stylesheet" href="https://code.jquery.com/mobile/1.4.5/jquery.mobile-1.4.5.min.css" />
+        <script src="https://code.jquery.com/jquery-1.11.1.min.js"></script>
+        <script src="https://code.jquery.com/mobile/1.4.5/jquery.mobile-1.4.5.min.js"></script>
+    </head>
+    <body>
+        <div data-role="page" id="home">
+            <div data-role="header">
+                <h1>La Liga Map</h1>
+                <a id="refresh" href="" data-icon="recycle" class="ui-btn-right">Refresh</a>
+            </div>
+            <div data-role="content">
+                <ul data-role="listview" id="stationList">
+                </ul>
+            </div>
+        </div>
+        <div data-role="page" id="details">
+            <div data-role="header" data-add-back-btn="true">
+                <h1>Station detail</h1>
+            </div>
+            <div data-role="content">
+                <img id="stationIcon"/>
+                <h4 id="stationName">Station Name</h4>
+                <ul data-role="listview" data-filter="true" data-filter-placeholder="Search station..." data-inset="true" >
+                    <li><span id=stationDescription>Description</span></li>
+                    <li><span id=stationTemperature>Temperature</span></li>
+                    <li><span id=stationHumidity>Humidity</span></li>
+                    <li><span id=stationPressure>Pressure</span></li>
+                </ul>
+            </div>
+        </div>
+    </body>
+    <script src="./mycode.js"></script>
+</html>
