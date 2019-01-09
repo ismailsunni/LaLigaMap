@@ -3,6 +3,7 @@ const key = '5f7fcfcba01f48fe8916b6b6e1eb81bd'
 
 var matches = {};
 var currentMatchday = 1;
+var currentMatchdayView = -1;
 
 function setHeader(xhr) {
     xhr.setRequestHeader('X-Auth-Token', key);
@@ -10,7 +11,7 @@ function setHeader(xhr) {
 
 // Get matches on the current matchday
 function getMatches(){
-    $.ajax({
+    return $.ajax({
         url: footballDataBaseURL,
         type: 'GET',
         dataType: 'json',
@@ -19,6 +20,9 @@ function getMatches(){
             console.log(response);
             matches = {}
             currentMatchday = response['matches'][0]['season']['currentMatchday'];
+            if (currentMatchdayView < 0){
+                currentMatchdayView = currentMatchday;
+            }
             response['matches'].forEach(match => {
                 var matchday = match['matchday'];
                 if(!(matchday in matches)){
@@ -46,6 +50,24 @@ function getMatches(){
         beforeSend: setHeader
       });
 }
+function populateMatchesList(matchday){
+    // Remove all the previous items
+    $('#stationList li').remove();
+    console.log('Current matchday view: ' + matchday)
+    var currentMatches = matches[matchday];
+    currentMatches.forEach(currentMatch => {
+        $('#stationList').append(
+            '<li>' + currentMatch['homeTeam']['name'] + ' vs ' + currentMatch['awayTeam']['name'] + '</li>'
+        )
+    });
+    // Refresh the list (important)
+    $('#stationList').listview('refresh');
+}
+
+$.when(getMatches()).done(function(data, textStatus, jqXHR){
+    populateMatchesList(currentMatchdayView);
+});
+
 
 function generateList(stations){
     // Remove all the previous items
