@@ -67,53 +67,23 @@ function populateMatchesList(matchday){
     $('#matchList').listview('refresh');
 }
 
-$.when(getMatches()).done(function(data, textStatus, jqXHR){
-    populateMatchesList(currentMatchdayView);
-});
-
-
-function generateList(stations){
-    // Remove all the previous items
-    $('#matchList li').remove();
-    
-    $.each(stations, function(index, station){
-        console.log(station.name);
-        $('#matchList').append(
-            '<li><h2>' + station.name + '</h2>' + 
-            '<p>Province: ' + station.province + '</p>' +
-            '<p>Last updated: ' + station.date + '</p>' +
-            '<span id= "'+ index + '" class="ui-li-count">'+ 
-            Math.round(station.temperature) + '°</span></li>'
-            );
-    })
-    
-    // Refresh the list (important)
-    $('#matchList').listview('refresh');
+function populateComboBox(){
+    $('#select-matchday').empty();
+    i = 1;
+    while(i <= 38){
+        $('#select-matchday').append('<option value='+ i + '>' + i +'</option>');
+        i++;
+    }
+    console.log(currentMatchday);
+    $("#select-matchday").val(currentMatchdayView).change();
 }
 
-// Refresh button event
-$(document).on("click", "#refresh", function(){
-    // Prevent the usual navigation behavior
-    event.preventDefault();
+$('#select-matchday').on('change', function() {
+    currentMatchdayView = this.value
+    populateMatchesList(currentMatchdayView);
+  });
 
-    $.getJSON(meteoclimaticNetwork, function(result){
-        var stations = [];
-        console.log(result.stations.records);
-        var records = result.stations.records;
-        records.forEach(record => {
-            stations.push(
-                {
-                    'name': record[1],
-                    'province': record[2],
-                    'date': record[18],
-                    'temperature': record[5],
-                    'latitude': record[3],
-                    'longitude': record[4]
-                }
-            );
-        });
-        // Show to the list
-        generateList(stations);
-    });
-
+$.when(getMatches()).done(function(data, textStatus, jqXHR){
+    populateMatchesList(currentMatchdayView);
+    populateComboBox();
 });
