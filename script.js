@@ -56,12 +56,23 @@ function populateMatchesList(matchday){
     console.log('Current matchday view: ' + matchday)
     var currentMatches = matches[matchday];
     currentMatches.forEach(currentMatch => {
+        var homeTeamScore = 'unknown';
+        var awayTeamScore = 'unknown';
+        if (currentMatch['status'] === 'FINISHED'){
+            homeTeamScore = currentMatch['score']['fullTime']['homeTeam'];
+            awayTeamScore = currentMatch['score']['fullTime']['awayTeam'];
+        } else if (currentMatch['status'] === 'SCHEDULED'){
+            homeTeamScore = '?';
+            awayTeamScore = '?';
+        }
+
         $('#matchList').append(
             '<li><a href="#">' + 
-            '<p><span class="team-name">' + currentMatch['homeTeam']['name'] + '</span><span class="score">' + currentMatch['score']['fullTime']['homeTeam'] + '</span></p>' +
-            '<p><span class="team-name">' + currentMatch['awayTeam']['name'] + '</span><span class="score">' + currentMatch['score']['fullTime']['homeTeam'] + '</span></p>' +
+            '<p><span class="team-name">' + currentMatch['homeTeam']['name'] + '</span><span class="score">' + homeTeamScore + '</span></p>' +
+            '<p><span class="team-name">' + currentMatch['awayTeam']['name'] + '</span><span class="score">' + awayTeamScore + '</span></p>' +
             '</a></li>'
         )
+        
     });
     // Refresh the list (important)
     $('#matchList').listview('refresh');
