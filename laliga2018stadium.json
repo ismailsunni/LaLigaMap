@@ -1,0 +1,162 @@
+{
+   "77": {
+      "Team": "Athletic Bilbao",
+      "Location": "Bilbao",
+      "Stadium": "San Mamés",
+      "Latitude": 43.264284,
+      "Longitude": -2.950366,
+      "Capacity": 53000
+   },
+   "78": {
+      "Team": "Atlético Madrid",
+      "Location": "Madrid",
+      "Stadium": "Wanda Metropolitano",
+      "Latitude": 40.436111,
+      "Longitude": -3.599444,
+      "Capacity": 68000
+   },
+   "80": {
+      "Team": "Espanyol",
+      "Location": "Barcelona",
+      "Stadium": "RCDE Stadium",
+      "Latitude": 41.347861,
+      "Longitude": 2.075667,
+      "Capacity": 40000
+   },
+   "81": {
+      "Team": "Barcelona",
+      "Location": "Barcelona",
+      "Stadium": "Camp Nou",
+      "Latitude": 41.38087,
+      "Longitude": 2.122802,
+      "Capacity": 99354
+   },
+   "82": {
+      "Team": "Getafe",
+      "Location": "Getafe",
+      "Stadium": "Coliseum Alfonso Pérez",
+      "Latitude": 40.325556,
+      "Longitude": -3.714722,
+      "Capacity": 17000
+   },
+   "86": {
+      "Team": "Real Madrid",
+      "Location": "Madrid",
+      "Stadium": "Santiago Bernabéu",
+      "Latitude": 40.45306,
+      "Longitude": -3.68835,
+      "Capacity": 81044
+   },
+   "87": {
+      "Team": "Rayo Vallecano",
+      "Location": "Madrid",
+      "Stadium": "Vallecas",
+      "Latitude": 40.391944,
+      "Longitude": -3.658961,
+      "Capacity": 14708
+   },
+   "88": {
+      "Team": "Levante",
+      "Location": "Valencia",
+      "Stadium": "Ciutat de València",
+      "Latitude": 39.494722,
+      "Longitude": -0.364167,
+      "Capacity": 26354
+   },
+   "90": {
+      "Team": "Real Betis",
+      "Location": "Seville",
+      "Stadium": "Benito Villamarín",
+      "Latitude": 37.356389,
+      "Longitude": -5.981389,
+      "Capacity": 60721
+   },
+   "92": {
+      "Team": "Real Sociedad",
+      "Location": "San Sebastián",
+      "Stadium": "Anoeta",
+      "Latitude": 43.301378,
+      "Longitude": -1.973617,
+      "Capacity": 32000
+   },
+   "94": {
+      "Team": "Villarreal",
+      "Location": "Villarreal",
+      "Stadium": "Estadio de la Cerámica",
+      "Latitude": 39.944167,
+      "Longitude": -0.103611,
+      "Capacity": 23500
+   },
+   "95": {
+      "Team": "Valencia",
+      "Location": "Valencia",
+      "Stadium": "Mestalla",
+      "Latitude": 39.474656,
+      "Longitude": -0.358361,
+      "Capacity": 49500
+   },
+   "250": {
+      "Team": "Valladolid",
+      "Location": "Valladolid",
+      "Stadium": "José Zorrilla",
+      "Latitude": 41.644444,
+      "Longitude": -4.761111,
+      "Capacity": 26512
+   },
+   "263": {
+      "Team": "Alavés",
+      "Location": "Vitoria-Gasteiz",
+      "Stadium": "Mendizorrotza",
+      "Latitude": 42.837111,
+      "Longitude": -2.688044,
+      "Capacity": 19840
+   },
+   "278": {
+      "Team": "Eibar",
+      "Location": "Eibar",
+      "Stadium": "Ipurua",
+      "Latitude": 43.181706,
+      "Longitude": -2.475803,
+      "Capacity": 7083
+   },
+   "298": {
+      "Team": "Girona",
+      "Location": "Girona",
+      "Stadium": "Montilivi",
+      "Latitude": 41.961389,
+      "Longitude": 2.828611,
+      "Capacity": 13500
+   },
+   "299": {
+      "Team": "Huesca",
+      "Location": "Huesca",
+      "Stadium": "El Alcoraz",
+      "Latitude": 42.131944,
+      "Longitude": -0.424444,
+      "Capacity": 7638
+   },
+   "558": {
+      "Team": "Celta Vigo",
+      "Location": "Vigo",
+      "Stadium": "Abanca-Balaídos",
+      "Latitude": 42.211842,
+      "Longitude": -8.739711,
+      "Capacity": 29000
+   },
+   "559": {
+      "Team": "Sevilla",
+      "Location": "Seville",
+      "Stadium": "Ramón Sánchez Pizjuán",
+      "Latitude": 37.384,
+      "Longitude": -5.9705,
+      "Capacity": 42714
+   },
+   "745": {
+      "Team": "Leganés",
+      "Location": "Leganés",
+      "Stadium": "Butarque",
+      "Latitude": 40.3404,
+      "Longitude": -3.7607,
+      "Capacity": 12450
+   }
+}
