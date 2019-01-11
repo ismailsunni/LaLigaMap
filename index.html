@@ -12,16 +12,17 @@
         <div data-role="page" id="home">
             <div data-role="header">
                 <h1>La Liga Map</h1>
-                <a id="refresh" href="" data-icon="recycle" class="ui-btn-right">Refresh</a>
+                <!-- <a id="refresh" href="" data-icon="recycle" class="ui-btn-right">Refresh</a> -->
             </div>
             <div data-role="navbar">
-                <form>
-                        <div class="ui-field-contain">
-                            <label for="select-matchday"><span>Match day:</span></label>
-                            <select name="select-matchday" id="select-matchday">
-                            </select>
-                        </div>
-                    </form>
+                <div class="ui-grid-a">
+                    <div class="ui-block-a center-align">
+                        Match day:
+                    </div>
+                    <div class="ui-block-b">
+                        <select name="select-matchday" id="select-matchday"></select>
+                    </div>
+                </div>
             </div>
             <div data-role="content">
                 <div>
