@@ -15,37 +15,15 @@
                 <a id="refresh" href="" data-icon="recycle" class="ui-btn-right">Refresh</a>
             </div>
             <div data-role="navbar">
-                <!-- <ul>
-                    <li><a href="#">Previous Matchday</a></li>
-                    <li><a href="#" class="ui-btn-active">Current Matchday</a></li>
-                    <li><a href="#">Next Matchday</a></li>
-                </ul> -->
                 <form>
                         <div class="ui-field-contain">
                             <label for="select-matchday"><span>Match day:</span></label>
                             <select name="select-matchday" id="select-matchday">
-                                <option value="1">1</option>
-                                <option value="2">2</option>
-                                <option value="3">3</option>
-                                <option value="4">4</option>
                             </select>
                         </div>
                     </form>
             </div>
             <div data-role="content">
-                <!-- <div>
-                    <form>
-                        <div class="ui-field-contain">
-                            <label for="select-native-1">Basic:</label>
-                            <select name="select-native-1" id="select-native-1">
-                            <option value="1">The 1st Option</option>
-                            <option value="2">The 2nd Option</option>
-                            <option value="3">The 3rd Option</option>
-                            <option value="4">The 4th Option</option>
-                            </select>
-                        </div>
-                    </form>
-                </div> -->
                 <div>
                     <ul data-role="listview" id="matchList">
                     </ul>
@@ -54,17 +32,25 @@
         </div>
         <div data-role="page" id="details">
             <div data-role="header" data-add-back-btn="true">
-                <h1>Station detail</h1>
+                <h1>Match detail</h1>
             </div>
             <div data-role="content">
-                <img id="stationIcon"/>
-                <h4 id="stationName">Station Name</h4>
-                <ul data-role="listview" data-filter="true" data-filter-placeholder="Search station..." data-inset="true" >
-                    <li><span id=stationDescription>Description</span></li>
-                    <li><span id=stationTemperature>Temperature</span></li>
-                    <li><span id=stationHumidity>Humidity</span></li>
-                    <li><span id=stationPressure>Pressure</span></li>
-                </ul>
+                <div class="ui-grid-b">
+                    <div class="ui-block-a left-align" id=homeTeam>Home Team</div>
+                    <div class="ui-block-b center-align" id=fullTimeScore>Full time score</div>
+                    <div class="ui-block-c right-align" id=awayTeam>Away Team</div>
+                </div>
+                <br>
+                <div class="ui-grid-a">
+                    <div class="ui-block-a left-align">Date</div>
+                    <div class="ui-block-b right-align">Time</div>
+                    <div class="ui-block-a left-align" id="date">Date</div>
+                    <div class="ui-block-b right-align" id="time">Time</div>
+                </div>
+                <!-- <ul data-role="listview">
+                    <li><span id=winner>Winner</span></li>
+                    <li><span id=status>Status</span></li>
+                </ul> -->
             </div>
         </div>
     </body>

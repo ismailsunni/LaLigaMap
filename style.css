@@ -1,2 +1,11 @@
 .team-name { float: left;}
 .score { float: right;}
+.left-align {
+    text-align: left;
+}
+.center-align {
+    text-align: center;
+}
+.right-align {
+    text-align: right;
+}

@@ -4,6 +4,11 @@ const key = '5f7fcfcba01f48fe8916b6b6e1eb81bd'
 var matches = {};
 var currentMatchday = 1;
 var currentMatchdayView = -1;
+var currentMatchID = -1; 
+
+var storage = {
+    currentMatch: null
+}
 
 function setHeader(xhr) {
     xhr.setRequestHeader('X-Auth-Token', key);
@@ -26,21 +31,20 @@ function getMatches(){
             response['matches'].forEach(match => {
                 var matchday = match['matchday'];
                 if(!(matchday in matches)){
-                    matches[matchday] = [];
+                    matches[matchday] = {};
                 }
-                matches[matchday].push(
-                    {
-                        'utcDate': match['utcDate'],
-                        'status': match['status'],
-                        'homeTeam': match['homeTeam'],
-                        'awayTeam': match['awayTeam'],
-                        'score': {
-                            'winner': match['score']['winner'],
-                            'halfTime': match['score']['halfTime'],
-                            'fullTime': match['score']['fullTime'],
-                        }
+                matches[matchday][match['id']] = {
+                    'id': match['id'],
+                    'utcDate': match['utcDate'],
+                    'status': match['status'],
+                    'homeTeam': match['homeTeam'],
+                    'awayTeam': match['awayTeam'],
+                    'score': {
+                        'winner': match['score']['winner'],
+                        'halfTime': match['score']['halfTime'],
+                        'fullTime': match['score']['fullTime'],
                     }
-                );
+                };
             })
         },
         error: function(response) {
@@ -55,7 +59,7 @@ function populateMatchesList(matchday){
     $('#matchList li').remove();
     console.log('Current matchday view: ' + matchday)
     var currentMatches = matches[matchday];
-    currentMatches.forEach(currentMatch => {
+    $.each(currentMatches, function(matchID, currentMatch){
         var homeTeamScore = 'unknown';
         var awayTeamScore = 'unknown';
         if (currentMatch['status'] === 'FINISHED'){
@@ -67,12 +71,11 @@ function populateMatchesList(matchday){
         }
 
         $('#matchList').append(
-            '<li><a href="#">' + 
+            '<li><a href="#" class="matchitem" id=' + currentMatch['id'] + '>' + 
             '<p><span class="team-name">' + currentMatch['homeTeam']['name'] + '</span><span class="score">' + homeTeamScore + '</span></p>' +
             '<p><span class="team-name">' + currentMatch['awayTeam']['name'] + '</span><span class="score">' + awayTeamScore + '</span></p>' +
             '</a></li>'
         )
-        
     });
     // Refresh the list (important)
     $('#matchList').listview('refresh');
@@ -97,4 +100,44 @@ $('#select-matchday').on('change', function() {
 $.when(getMatches()).done(function(data, textStatus, jqXHR){
     populateMatchesList(currentMatchdayView);
     populateComboBox();
+});
+
+
+$(document).on('pagebeforeshow', '#home', function(){       
+    $(document).on('click', '.matchitem', function(e){     
+        // store some data
+        console.log(e.target.id)
+        var currentMatchID = e.target.id
+        storage['currentMatch'] = matches[currentMatchdayView][currentMatchID]
+        console.log(storage['currentMatch']);
+        // Change page
+        $.mobile.changePage('#details')
+    });    
+});
+
+// Event to populate UI of details
+$(document).on("pagebeforeshow", "#details", function(e){
+    // Stop more events
+    e.preventDefault(); 
+
+    var currentMatch = storage['currentMatch'];
+    var score = currentMatch['score']
+    var fullTimeScoreString = '? - ?'
+    var winnerString = 'N/A'
+    if (currentMatch['status'] === 'FINISHED'){
+        fullTimeScoreString = score['fullTime']['homeTeam'] + ' - ' + score['fullTime']['awayTeam'];
+        winnerString = score['winner'];
+    }
+    var datetime = new Date(currentMatch['utcDate'])
+    var dateFormatOptions = { weekday: 'long', year: 'numeric', month: 'long', day: 'numeric' };
+    var date = datetime.toLocaleDateString('en-US', dateFormatOptions)
+    var time = datetime.toLocaleTimeString('en-US')
+    
+    $('#date').text(date)
+    $('#time').text(time)
+    $('#homeTeam').text(currentMatch['homeTeam']['name'])
+    $('#awayTeam').text(currentMatch['awayTeam']['name'])
+    $('#fullTimeScore').text(fullTimeScoreString)
+    $('#winner').text(score['winner'])
+    $('#status').text(currentMatch['status'])
 });
