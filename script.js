@@ -1,5 +1,6 @@
 const footballDataBaseURL = 'https://api.football-data.org/v2/competitions/PD/matches'
 const key = '5f7fcfcba01f48fe8916b6b6e1eb81bd'
+const stadiumURL = 'https://api.myjson.com/bins/hxip4';
 
 var matches = {};
 var currentMatchday = 1;
@@ -7,8 +8,14 @@ var currentMatchdayView = -1;
 var currentMatchID = -1; 
 
 var storage = {
-    currentMatch: null
+    currentMatch: null,
+    stadiums: null
 }
+
+$.getJSON(stadiumURL, function(data){
+    console.log(data);
+    storage['stadiums'] = data;
+});
 
 function setHeader(xhr) {
     xhr.setRequestHeader('X-Auth-Token', key);
@@ -132,7 +139,7 @@ $(document).on("pagebeforeshow", "#details", function(e){
     var dateFormatOptions = { weekday: 'long', year: 'numeric', month: 'long', day: 'numeric' };
     var date = datetime.toLocaleDateString('en-US', dateFormatOptions)
     var time = datetime.toLocaleTimeString('en-US')
-    
+
     $('#date').text(date)
     $('#time').text(time)
     $('#homeTeam').text(currentMatch['homeTeam']['name'])
