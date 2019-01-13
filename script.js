@@ -222,6 +222,8 @@ $(document).on("pagebeforeshow", "#details", function(e){
 // Event handler on list item clicked
 $(document).on('pagebeforeshow', '#home', function(){       
     $(document).on('click', '.matchitem', function(e){     
+        // Stop more events
+        e.preventDefault();
         // store some data
         var currentMatchID = e.target.id
         storage.currentMatch = storage.matches[storage.currentMatchdayView][currentMatchID]
