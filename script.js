@@ -9,7 +9,8 @@ var currentMatchID = -1;
 
 var storage = {
     currentMatch: null,
-    stadiums: null
+    stadiums: null,
+    map: null
 }
 
 $.getJSON(stadiumURL, function(data){
@@ -147,4 +148,25 @@ $(document).on("pagebeforeshow", "#details", function(e){
     $('#fullTimeScore').text(fullTimeScoreString)
     $('#winner').text(score['winner'])
     $('#status').text(currentMatch['status'])
+});
+
+
+storage['map'] = L.map('map').setView([51.505, -0.09], 13);
+
+// add an OpenStreetMap tile layer
+L.tileLayer('http://{s}.tile.osm.org/{z}/{x}/{y}.png', {
+    attribution: '&copy; <a href="http://osm.org/copyright">OpenStreetMap</a> contributors'
+}).addTo(storage['map']);
+
+$(document).on("pagebeforeshow", "#mapPage", function(e){
+    // Stop more events
+    e.preventDefault(); 
+    console.log('before show map.')
+    // storage['map'].invalidateSize();
+    setTimeout(
+        function(){
+            console.log('call invalidate size')
+            storage['map'].invalidateSize(true);
+        },
+        100)
 });

@@ -4,14 +4,17 @@
         <meta charset="utf-8"/>
         <meta name="viewport" content="width=device-width, initial-scale=1">
         <link rel="stylesheet" href="https://code.jquery.com/mobile/1.4.5/jquery.mobile-1.4.5.min.css" />
+        <link rel="stylesheet" href="http://cdn.leafletjs.com/leaflet/v0.7.7/leaflet.css" />  
+
         <script src="https://code.jquery.com/jquery-1.11.1.min.js"></script>
         <script src="https://code.jquery.com/mobile/1.4.5/jquery.mobile-1.4.5.min.js"></script>
+        <script src="http://cdn.leafletjs.com/leaflet/v0.7.7/leaflet.js"></script>
         <link rel="stylesheet" href="./style.css" />
     </head>
     <body>
         <div data-role="page" id="home">
             <div data-role="header">
-                    <a href="#map" class="ui-btn-left ui-btn ui-btn-inline ui-mini ui-corner-all ui-btn-icon-left ui-icon-location">Map</a>
+                    <a href="#mapPage" class="ui-btn-left ui-btn ui-btn-inline ui-mini ui-corner-all ui-btn-icon-left ui-icon-location">Map</a>
                 <h1>La Liga Map</h1>
                 <!-- <a id="refresh" href="" data-icon="recycle" class="ui-btn-right">Refresh</a> -->
             </div>
@@ -55,10 +58,13 @@
                 </ul> -->
             </div>
         </div>
-        <div data-role="page" id="map">
+        <div data-role="page" id="mapPage">
             <div data-role="header" data-add-back-btn="true">
                 <h1>La Liga Map</h1>
                 <!-- <a id="refresh" href="" data-icon="recycle" class="ui-btn-right">Refresh</a> -->
+            </div>
+            <div id="map-content" data-role="content">
+                <div id="map"></div>
             </div>
         </div>
     </body>
