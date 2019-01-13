@@ -2,6 +2,20 @@ const footballDataBaseURL = 'https://api.football-data.org/v2/competitions/PD/ma
 const key = '5f7fcfcba01f48fe8916b6b6e1eb81bd'
 const stadiumURL = 'https://api.myjson.com/bins/hxip4';
 
+// Match status
+const FINISHED = 'FINISHED'
+const IN_PLAY = 'IN_PLAY'
+const SCHEDULED = 'SCHEDULED'
+
+// Result / winner
+const HOME_TEAM = 'HOME_TEAM'
+const AWAY_TEAM = 'AWAY_TEAM'
+const DRAW = 'DRAW'
+
+// Accessor
+const homeTeam = 'homeTeam'
+const awayTeam = 'awayTeam'
+
 var storage = {
     matches: {},
     currentMatchday: 1,
@@ -43,8 +57,8 @@ function getMatches(){
                     'id': match['id'],
                     'utcDate': match['utcDate'],
                     'status': match['status'],
-                    'homeTeam': match['homeTeam'],
-                    'awayTeam': match['awayTeam'],
+                    homeTeam: match[homeTeam],
+                    awayTeam: match[awayTeam],
                     'score': {
                         'winner': match['score']['winner'],
                         'halfTime': match['score']['halfTime'],
@@ -67,18 +81,18 @@ function populateMatchesList(matchday){
     $.each(currentMatches, function(matchID, currentMatch){
         var homeTeamScore = 'unknown';
         var awayTeamScore = 'unknown';
-        if (currentMatch['status'] === 'FINISHED'){
-            homeTeamScore = currentMatch['score']['fullTime']['homeTeam'];
-            awayTeamScore = currentMatch['score']['fullTime']['awayTeam'];
-        } else if (currentMatch['status'] === 'SCHEDULED'){
+        if (currentMatch['status'] === FINISHED){
+            homeTeamScore = currentMatch['score']['fullTime'][homeTeam];
+            awayTeamScore = currentMatch['score']['fullTime'][awayTeam];
+        } else if (currentMatch['status'] === SCHEDULED){
             homeTeamScore = '?';
             awayTeamScore = '?';
         }
 
         $('#matchList').append(
             '<li><a href="#" class="matchitem" id=' + currentMatch['id'] + '>' + 
-            '<p><span class="team-name">' + currentMatch['homeTeam']['name'] + '</span><span class="score">' + homeTeamScore + '</span></p>' +
-            '<p><span class="team-name">' + currentMatch['awayTeam']['name'] + '</span><span class="score">' + awayTeamScore + '</span></p>' +
+            '<p><span class="team-name">' + currentMatch[homeTeam]['name'] + '</span><span class="score">' + homeTeamScore + '</span></p>' +
+            '<p><span class="team-name">' + currentMatch[awayTeam]['name'] + '</span><span class="score">' + awayTeamScore + '</span></p>' +
             '</a></li>'
         )
     });
@@ -128,8 +142,8 @@ $(document).on("pagebeforeshow", "#details", function(e){
     var score = currentMatch['score']
     var fullTimeScoreString = '? - ?'
     var winnerString = 'N/A'
-    if (currentMatch['status'] === 'FINISHED'){
-        fullTimeScoreString = score['fullTime']['homeTeam'] + ' - ' + score['fullTime']['awayTeam'];
+    if (currentMatch['status'] === FINISHED){
+        fullTimeScoreString = score['fullTime'][homeTeam] + ' - ' + score['fullTime'][awayTeam];
         winnerString = score['winner'];
     }
     var datetime = new Date(currentMatch['utcDate'])
@@ -139,8 +153,8 @@ $(document).on("pagebeforeshow", "#details", function(e){
 
     $('#date').text(date)
     $('#time').text(time)
-    $('#homeTeam').text(currentMatch['homeTeam']['name'])
-    $('#awayTeam').text(currentMatch['awayTeam']['name'])
+    $('#homeTeam').text(currentMatch[homeTeam]['name'])
+    $('#awayTeam').text(currentMatch[awayTeam]['name'])
     $('#fullTimeScore').text(fullTimeScoreString)
     $('#winner').text(score['winner'])
     $('#status').text(currentMatch['status'])
