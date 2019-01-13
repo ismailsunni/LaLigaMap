@@ -22,11 +22,13 @@ var storage = {
     currentMatchdayView: 0,
     currentMatch: null,
     stadiums: null,
-    map: null
+    map: null,
+    stadiumsMarker: [],
+    stadiumsMarkerGroup: null
 }
 
 $.getJSON(stadiumURL, function(data){
-    console.log(data);
+    // console.log(data);
     storage.stadiums = data;
 });
 
@@ -161,7 +163,7 @@ $(document).on("pagebeforeshow", "#details", function(e){
 });
 
 // Add map
-storage.map = L.map('map').setView([51.505, -0.09], 13);
+storage.map = L.map('map').setView([41.278, -2.505], 5);
 
 // add an OpenStreetMap tile layer
 L.tileLayer('http://{s}.tile.osm.org/{z}/{x}/{y}.png', {
@@ -169,5 +171,17 @@ L.tileLayer('http://{s}.tile.osm.org/{z}/{x}/{y}.png', {
 }).addTo(storage.map);
 
 $(document).on("pageshow", "#mapPage", function(e){
+    console.log(storage.stadiums)
     storage.map.invalidateSize();
+});
+
+$(document).on("pagebeforeshow", "#mapPage", function(e){
+    console.log('before show map page')
+    storage.stadiumsMarker = []
+    $.each(storage.stadiums, function(teamID, stadium){
+        var marker = new L.marker([stadium['Latitude'], stadium['Longitude']])
+        storage.stadiumsMarker.push(marker)
+    });
+    stadiumsMarkerGroup = new L.featureGroup(storage.stadiumsMarker);
+    stadiumsMarkerGroup.addTo(storage.map);
 });
