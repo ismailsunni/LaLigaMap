@@ -94,32 +94,36 @@ function populateMatchesList(matchday){
         });
     var dateTimeIterator = new Date('2000-01-01T00:00:00Z')
     $.each(sortedCurrentMatches, function(matchID, currentMatch){
-        var homeTeamScore = 'unknown';
-        var awayTeamScore = 'unknown';
-        if (currentMatch['status'] === FINISHED){
-            homeTeamScore = currentMatch['score']['fullTime'][homeTeam];
-            awayTeamScore = currentMatch['score']['fullTime'][awayTeam];
-        } else if (currentMatch['status'] === SCHEDULED){
-            homeTeamScore = '?';
-            awayTeamScore = '?';
-        } else if (currentMatch['status'] === IN_PLAY){
-            homeTeamScore = currentMatch['score']['fullTime'][homeTeam] + '*';
-            awayTeamScore = currentMatch['score']['fullTime'][awayTeam] + '*';
-        }
-
         // Date and Time
         var datetime = new Date(currentMatch['utcDate'])
         var dateFormatOptions = { weekday: 'long', year: 'numeric', month: 'long', day: 'numeric' };
         var timeFormatOptions = {hour: '2-digit', minute:'2-digit', hour12: false}
         var date = datetime.toLocaleDateString('en-US', dateFormatOptions)
         var time = datetime.toLocaleTimeString('en-US', timeFormatOptions)
+
+        // Score
+        var homeTeamScore = 'unknown';
+        var awayTeamScore = 'unknown';
+        if (currentMatch['status'] === FINISHED){
+            homeTeamScore = currentMatch['score']['fullTime'][homeTeam];
+            awayTeamScore = currentMatch['score']['fullTime'][awayTeam];
+            time = 'FT'
+        } else if (currentMatch['status'] === SCHEDULED){
+            homeTeamScore = '?';
+            awayTeamScore = '?';
+        } else if (currentMatch['status'] === IN_PLAY){
+            homeTeamScore = currentMatch['score']['fullTime'][homeTeam] + '*';
+            awayTeamScore = currentMatch['score']['fullTime'][awayTeam] + '*';
+            time = 'Play'
+        }
+
         if (stringifyDate(dateTimeIterator) < stringifyDate(datetime)){
-            console.log(datetime);
             dateTimeIterator = datetime;
             $('#matchList').append(
             '<li data-role="list-divider">' + date + '</li>'
             )
         }
+        
 
         $('#matchList').append(
             '<li><a href="#" class="matchitem" id=' + currentMatch['id'] + '>' + 
