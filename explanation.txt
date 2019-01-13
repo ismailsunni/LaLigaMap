@@ -9,6 +9,8 @@ Features:
 - Detail page contains the match detail and the stadium information
 - Map page contains where the match occurs filtered by match day
 - Deployed easily in github pages, just need to commit and push, then live
+- Refresh manually
+- Clustering in the map
 
 API source:
 - https://api.football-data.org/v2
@@ -22,3 +24,8 @@ Problems:
 - No stadium data, thus I need to create my own API
 - The API is quite limited, especially no live result (I don't want to pay), so I just show delayed result
 - Time is limited, I want to add more features but I have other assignments :)
+
+
+Future plans:
+- More information in the stadium markers
+- 
