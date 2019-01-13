@@ -217,7 +217,7 @@ $(document).on("pagebeforeshow", "#details", function(e){
 storage.map = L.map('map').setView([41.278, -2.505], 5);
 
 // add an OpenStreetMap tile layer
-L.tileLayer('http://{s}.tile.osm.org/{z}/{x}/{y}.png', {
+L.tileLayer('https://{s}.tile.osm.org/{z}/{x}/{y}.png', {
     attribution: '&copy; <a href="http://osm.org/copyright">OpenStreetMap</a> contributors'
 }).addTo(storage.map);
 
