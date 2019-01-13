@@ -93,8 +93,10 @@ function populateMatchesList(matchday){
 
         $('#matchList').append(
             '<li><a href="#" class="matchitem" id=' + currentMatch['id'] + '>' + 
-            '<p><span class="team-name">' + currentMatch[homeTeam]['name'] + '</span><span class="score">' + homeTeamScore + '</span></p>' +
+            // '<div><h6>time</h6></div>' +
+            '<div><p><span class="team-name">' + currentMatch[homeTeam]['name'] + '</span><span class="score">' + homeTeamScore + '</span></p>' +
             '<p><span class="team-name">' + currentMatch[awayTeam]['name'] + '</span><span class="score">' + awayTeamScore + '</span></p>' +
+            '</div>' +
             '</a></li>'
         )
     });
@@ -170,12 +172,12 @@ L.tileLayer('http://{s}.tile.osm.org/{z}/{x}/{y}.png', {
     attribution: '&copy; <a href="http://osm.org/copyright">OpenStreetMap</a> contributors'
 }).addTo(storage.map);
 
-$(document).on("pageshow", "#mapPage", function(e){
+$(document).on("pageshow", "#map-page", function(e){
     console.log(storage.stadiums)
     storage.map.invalidateSize();
 });
 
-$(document).on("pagebeforeshow", "#mapPage", function(e){
+$(document).on("pagebeforeshow", "#map-page", function(e){
     console.log('before show map page')
     storage.stadiumsMarker = []
     $.each(storage.stadiums, function(teamID, stadium){
