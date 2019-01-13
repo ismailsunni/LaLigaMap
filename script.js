@@ -196,7 +196,7 @@ $(document).on("pagebeforeshow", "#details", function(e){
     var fullTimeScoreString = '? - ?'
     var halfTimeScoreString = '? - ?'
     var winnerString = 'N/A'
-    if (currentMatch['status'] != FINISHED){
+    if (currentMatch['status'] != SCHEDULED){
         halfTimeScoreString = score['halfTime'][homeTeam] + ' - ' + score['halfTime'][awayTeam];
         fullTimeScoreString = score['fullTime'][homeTeam] + ' - ' + score['fullTime'][awayTeam];
         winnerString = score['winner'];
