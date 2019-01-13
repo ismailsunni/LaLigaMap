@@ -5,8 +5,9 @@
 ☐ Map page
     ✔ Show map with all stadiums @started(19-01-11 23:32) @done(19-01-13 11:35) @lasted(1d12h3m33s)
     ✔ Add pop up for stadium information @done(19-01-13 11:46)
-    ☐ Per match day
+    ✔ Per match day @done(19-01-13 20:34)
     ☐ style in map for match result
+    ☐ Add more info to the current match
 ☐ Match detail page
     ✔ half time result @done(19-01-13 15:18)
     ☐ referee
@@ -20,5 +21,4 @@
 ☐ Code
     ✔ move global variable to storage @started(19-01-13 10:24) @done(19-01-13 10:39) @lasted(15m15s)
     ✔ use constant for STATUS and WINNER strings @started(19-01-13 10:40) @done(19-01-13 10:46) @lasted(6m18s)
-
 ☐ About page

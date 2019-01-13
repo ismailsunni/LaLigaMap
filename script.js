@@ -265,7 +265,6 @@ function getAllHomeTeamIDs(matchday){
 
 function populateStadiumMarkers(matchday){
     var homeTeamIDs = getAllHomeTeamIDs(matchday);
-    console.log(homeTeamIDs)
     if (storage.stadiumsMarkerGroup != null){
         storage.stadiumsMarkerGroup.clearLayers();
     }
