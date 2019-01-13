@@ -14,13 +14,13 @@
     height: calc(100% - 42px);
 }
 
-#map {
-	height: 100%;
-}
-
 #map-content{
 	height: 100%;
 	padding: 0px; 
 	margin:0px;
 	z-index: -1;
+}
+
+#map {
+	height: 100%;
 }
