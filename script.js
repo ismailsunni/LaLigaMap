@@ -34,8 +34,7 @@ $.getJSON(stadiumURL, function(data){
 
 function setHeader(xhr) {
     xhr.setRequestHeader('X-Auth-Token', key);
-  }
-
+}
 // Get matches on the current matchday
 function getMatches(){
     return $.ajax({
@@ -124,7 +123,6 @@ function populateMatchesList(matchday){
     // Refresh the list (important)
     $('#matchList').listview('refresh');
 }
-
 function populateComboBox(){
     $('#select-matchday').empty();
     i = 1;
@@ -138,18 +136,14 @@ function populateComboBox(){
     };
     $("#select-matchday").val(storage.currentMatchdayView).change();
 }
-
 $('#select-matchday').on('change', function() {
     storage.currentMatchdayView = this.value
     populateMatchesList(storage.currentMatchdayView);
-  });
-
+});
 $.when(getMatches()).done(function(data, textStatus, jqXHR){
     populateMatchesList(storage.currentMatchdayView);
     populateComboBox();
 });
-
-
 $(document).on('pagebeforeshow', '#home', function(){       
     $(document).on('click', '.matchitem', function(e){     
         // store some data
@@ -161,7 +155,6 @@ $(document).on('pagebeforeshow', '#home', function(){
         $.mobile.changePage('#details')
     });    
 });
-
 // Event to populate UI of details
 $(document).on("pagebeforeshow", "#details", function(e){
     // Stop more events
@@ -212,7 +205,6 @@ $(document).on("pagebeforeshow", "#details", function(e){
     $('#stadiumLocation').text(stadiumLocation)
     $('#stadiumCapacity').text(stadiumCapacity)
 });
-
 // Add map
 storage.map = L.map('map').setView([41.278, -2.505], 5);
 
@@ -220,12 +212,10 @@ storage.map = L.map('map').setView([41.278, -2.505], 5);
 L.tileLayer('https://{s}.tile.osm.org/{z}/{x}/{y}.png', {
     attribution: '&copy; <a href="http://osm.org/copyright">OpenStreetMap</a> contributors'
 }).addTo(storage.map);
-
 $(document).on("pageshow", "#map-page", function(e){
     console.log(storage.stadiums)
     storage.map.invalidateSize();
 });
-
 $(document).on("pagebeforeshow", "#map-page", function(e){
     console.log('before show map page')
     storage.stadiumsMarker = []
@@ -240,4 +230,16 @@ $(document).on("pagebeforeshow", "#map-page", function(e){
     });
     stadiumsMarkerGroup = new L.featureGroup(storage.stadiumsMarker);
     stadiumsMarkerGroup.addTo(storage.map);
+});
+
+
+// Refresh button event
+$(document).on("click", "#refresh", function(){
+    // Prevent the usual navigation behavior
+    event.preventDefault();
+    console.log('Refresh clicked.')
+    $.when(getMatches()).done(function(data, textStatus, jqXHR){
+        populateMatchesList(storage.currentMatchdayView);
+        populateComboBox();
+    });
 });

@@ -16,7 +16,7 @@
 ☐ List page
     ☐ group by date in the list
     ✔ handle IN_PLAY status @done(19-01-13 14:28)
-    ☐ refresh page
+    ✔ refresh page @done(19-01-13 15:41)
 ☐ Code
     ✔ move global variable to storage @started(19-01-13 10:24) @done(19-01-13 10:39) @lasted(15m15s)
     ✔ use constant for STATUS and WINNER strings @started(19-01-13 10:40) @done(19-01-13 10:46) @lasted(6m18s)
