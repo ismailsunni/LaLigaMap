@@ -1,0 +1,23 @@
+✔ All team's stadium @done(19-01-11 23:32)
+    ✔ name @done(19-01-11 23:32)
+    ✔ address @done(19-01-11 23:32)
+    ✔ longitude, latitude @done(19-01-11 23:32)
+☐ Map page
+    ☐ Show map with all stadiums @started(19-01-11 23:32)
+    ☐ Per match day
+    ☐ style in map for match result
+☐ Match detail page
+    ☐ half time result
+    ☐ referee
+    ☐ Distance from your location
+        ☐ user's geolocation
+    ☐ Map for a stadium in match detail
+☐ List page
+    ☐ group by date in the list
+    ☐ handle IN_PLAY status
+    ☐ refresh page
+☐ Code
+    ☐ move global variable to storage
+    ☐ use constant for STATUS and WINNER strings
+
+☐ About page
