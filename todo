@@ -17,7 +17,7 @@
     ☐ handle IN_PLAY status
     ☐ refresh page
 ☐ Code
-    ☐ move global variable to storage
+    ✔ move global variable to storage @started(19-01-13 10:24) @done(19-01-13 10:39) @lasted(15m15s)
     ☐ use constant for STATUS and WINNER strings
 
 ☐ About page

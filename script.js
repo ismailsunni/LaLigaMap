@@ -2,12 +2,10 @@ const footballDataBaseURL = 'https://api.football-data.org/v2/competitions/PD/ma
 const key = '5f7fcfcba01f48fe8916b6b6e1eb81bd'
 const stadiumURL = 'https://api.myjson.com/bins/hxip4';
 
-var matches = {};
-var currentMatchday = 1;
-var currentMatchdayView = -1;
-var currentMatchID = -1; 
-
 var storage = {
+    matches: {},
+    currentMatchday: 1,
+    currentMatchdayView: 0,
     currentMatch: null,
     stadiums: null,
     map: null
@@ -15,7 +13,7 @@ var storage = {
 
 $.getJSON(stadiumURL, function(data){
     console.log(data);
-    storage['stadiums'] = data;
+    storage.stadiums = data;
 });
 
 function setHeader(xhr) {
@@ -31,17 +29,17 @@ function getMatches(){
         success: function(response) {
             console.log('ajax success');
             console.log(response);
-            matches = {}
-            currentMatchday = response['matches'][0]['season']['currentMatchday'];
-            if (currentMatchdayView < 0){
-                currentMatchdayView = currentMatchday;
+            storage.matches = {}
+            storage.currentMatchday = response['matches'][0]['season']['currentMatchday'];
+            if (storage.currentMatchdayView < 1){
+                storage.currentMatchdayView = storage.currentMatchday;
             }
             response['matches'].forEach(match => {
                 var matchday = match['matchday'];
-                if(!(matchday in matches)){
-                    matches[matchday] = {};
+                if(!(matchday in storage.matches)){
+                    storage.matches[matchday] = {};
                 }
-                matches[matchday][match['id']] = {
+                storage.matches[matchday][match['id']] = {
                     'id': match['id'],
                     'utcDate': match['utcDate'],
                     'status': match['status'],
@@ -65,8 +63,7 @@ function getMatches(){
 function populateMatchesList(matchday){
     // Remove all the previous items
     $('#matchList li').remove();
-    console.log('Current matchday view: ' + matchday)
-    var currentMatches = matches[matchday];
+    var currentMatches = storage.matches[matchday];
     $.each(currentMatches, function(matchID, currentMatch){
         var homeTeamScore = 'unknown';
         var awayTeamScore = 'unknown';
@@ -95,18 +92,17 @@ function populateComboBox(){
     while(i <= 38){
         $('#select-matchday').append('<option value='+ i + '>' + i +'</option>');
         i++;
-    }
-    console.log(currentMatchday);
-    $("#select-matchday").val(currentMatchdayView).change();
+    };
+    $("#select-matchday").val(storage.currentMatchdayView).change();
 }
 
 $('#select-matchday').on('change', function() {
-    currentMatchdayView = this.value
-    populateMatchesList(currentMatchdayView);
+    storage.currentMatchdayView = this.value
+    populateMatchesList(storage.currentMatchdayView);
   });
 
 $.when(getMatches()).done(function(data, textStatus, jqXHR){
-    populateMatchesList(currentMatchdayView);
+    populateMatchesList(storage.currentMatchdayView);
     populateComboBox();
 });
 
@@ -116,8 +112,8 @@ $(document).on('pagebeforeshow', '#home', function(){
         // store some data
         console.log(e.target.id)
         var currentMatchID = e.target.id
-        storage['currentMatch'] = matches[currentMatchdayView][currentMatchID]
-        console.log(storage['currentMatch']);
+        storage.currentMatch = storage.matches[storage.currentMatchdayView][currentMatchID]
+        console.log(storage.currentMatch);
         // Change page
         $.mobile.changePage('#details')
     });    
@@ -128,7 +124,7 @@ $(document).on("pagebeforeshow", "#details", function(e){
     // Stop more events
     e.preventDefault(); 
 
-    var currentMatch = storage['currentMatch'];
+    var currentMatch = storage.currentMatch;
     var score = currentMatch['score']
     var fullTimeScoreString = '? - ?'
     var winnerString = 'N/A'
@@ -151,13 +147,13 @@ $(document).on("pagebeforeshow", "#details", function(e){
 });
 
 // Add map
-storage['map'] = L.map('map').setView([51.505, -0.09], 13);
+storage.map = L.map('map').setView([51.505, -0.09], 13);
 
 // add an OpenStreetMap tile layer
 L.tileLayer('http://{s}.tile.osm.org/{z}/{x}/{y}.png', {
     attribution: '&copy; <a href="http://osm.org/copyright">OpenStreetMap</a> contributors'
-}).addTo(storage['map']);
+}).addTo(storage.map);
 
 $(document).on("pageshow", "#mapPage", function(e){
-    storage['map'].invalidateSize();
+    storage.map.invalidateSize();
 });
