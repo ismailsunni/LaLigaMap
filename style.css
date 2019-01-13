@@ -24,3 +24,14 @@
 #map {
 	height: 100%;
 }
+
+.ui-grid-c>.time-cell {
+    width: 15%;
+    line-height: 40px;
+}
+.ui-grid-c>.match-cell {
+    width: 75%;
+}
+.ui-grid-c>.score-cell {
+    width: 10%;
+}

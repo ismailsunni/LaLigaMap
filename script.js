@@ -89,14 +89,37 @@ function populateMatchesList(matchday){
         } else if (currentMatch['status'] === SCHEDULED){
             homeTeamScore = '?';
             awayTeamScore = '?';
+        } else if (currentMatch['status'] === IN_PLAY){
+            homeTeamScore = currentMatch['score']['fullTime'][homeTeam] + '*';
+            awayTeamScore = currentMatch['score']['fullTime'][awayTeam] + '*';
         }
+
+        // Date and Time
+        // Date
+        // Time
+        var datetime = new Date(currentMatch['utcDate'])
+        var dateFormatOptions = { weekday: 'long', year: 'numeric', month: 'long', day: 'numeric' };
+        var timeFormatOptions = {hour: '2-digit', minute:'2-digit', hour12: false}
+        var date = datetime.toLocaleDateString('en-US', dateFormatOptions)
+        var time = datetime.toLocaleTimeString('en-US', timeFormatOptions)
 
         $('#matchList').append(
             '<li><a href="#" class="matchitem" id=' + currentMatch['id'] + '>' + 
-            // '<div><h6>time</h6></div>' +
-            '<div><p><span class="team-name">' + currentMatch[homeTeam]['name'] + '</span><span class="score">' + homeTeamScore + '</span></p>' +
-            '<p><span class="team-name">' + currentMatch[awayTeam]['name'] + '</span><span class="score">' + awayTeamScore + '</span></p>' +
-            '</div>' +
+            '<div class="ui-grid-c">' + 
+                '<div class="ui-block-a time-cell">' + time + '</div>' + 
+                '<div class="ui-block-b match-cell">' + 
+                    '<div class=ui-grid-solo>' + currentMatch[homeTeam]['name'] + '</div>' + 
+                    '<div class=ui-grid-solo>' + currentMatch[awayTeam]['name'] + '</div>' + 
+                '</div>' + 
+                '<div class="ui-block-c score-cell">' + 
+                    '<div class=ui-grid-solo>' + homeTeamScore + '</div>' + 
+                    '<div class=ui-grid-solo>' + awayTeamScore + '</div>' + 
+            '</div>' + 
+                '</div>' +
+            '</div' + 
+            // '<div><p><span class="team-name">' + currentMatch[homeTeam]['name'] + '</span><span class="score">' + homeTeamScore + '</span></p>' +
+            // '<p><span class="team-name">' + currentMatch[awayTeam]['name'] + '</span><span class="score">' + awayTeamScore + '</span></p>' +
+            // '</div>' +
             '</a></li>'
         )
     });
