@@ -20,11 +20,11 @@
             </div>
             <div data-role="navbar">
                 <div class="ui-grid-a">
-                    <div class="ui-block-a center-align" id="matchday-label">
+                    <div class="ui-block-a center-align matchday-label" id="matchday-label">
                         Match day:
                     </div>
                     <div class="ui-block-b">
-                        <select name="select-matchday" id="select-matchday" class="align-center"></select>
+                        <select name="select-matchday" id="select-matchday" class="select-matchday align-center"></select>
                     </div>
                 </div>
             </div>
@@ -98,6 +98,16 @@
         <div data-role="page" id="map-page">
             <div data-role="header" data-add-back-btn="true" id="map-header" data-position="fixed">
                 <h1>La Liga's Stadium</h1>
+                <div data-role="navbar">
+                    <ul>
+                        <li>
+                            Match day
+                        </li>
+                        <li>
+                            <select name="select-matchday" id="select-matchday-map" class="align-center select-matchday"></select>
+                        </li>
+                    </ul>
+                </div>
             </div>
             <div id="map-content" data-role="content">
                 <div id="map"></div>

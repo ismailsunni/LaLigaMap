@@ -26,7 +26,8 @@ var storage = {
     stadiums: null,
     map: null,
     stadiumsMarker: [],
-    stadiumsMarkerGroup: null
+    stadiumsMarkerGroup: null,
+    currentMatchdayMapView: 0,
 }
 
 // Helper function to set a header in a request
@@ -45,6 +46,9 @@ function getMatches(){
             storage.currentMatchday = response['matches'][0]['season']['currentMatchday'];
             if (storage.currentMatchdayView < 1){
                 storage.currentMatchdayView = storage.currentMatchday;
+            }
+            if (storage.currentMatchdayMapView < 1){
+                storage.currentMatchdayMapView = storage.currentMatchday;
             }
             response['matches'].forEach(match => {
                 var matchday = match['matchday'];
@@ -155,21 +159,30 @@ function populateMatchesList(matchday){
 // Shortcut to populate combo box for choosing matchday
 function populateComboBox(){
     $('#select-matchday').empty();
+    $('#select-matchday-map').empty();
     i = 1;
     while(i <= 38){
         var currentMatchdayString = i;
         if (i == storage.currentMatchday) {
             currentMatchdayString = i + ' (current)'    
         }
-        $('#select-matchday').append('<option value='+ i + '>' + currentMatchdayString +'</option>');
+        var optionText = '<option value='+ i + '>' + currentMatchdayString +'</option>'
+        $('#select-matchday').append(optionText);
+        $('#select-matchday-map').append(optionText);
         i++;
     };
     $("#select-matchday").val(storage.currentMatchdayView).change();
+    $("#select-matchday-map").val(storage.currentMatchdayView).change();
 }
 
 // Event handler for matchday select
 $('#select-matchday').on('change', function() {
     storage.currentMatchdayView = this.value
+    populateMatchesList(storage.currentMatchdayView);
+});
+
+$('#select-matchday-map').on('change', function() {
+    storage.currentMatchdayMapView = this.value
     populateMatchesList(storage.currentMatchdayView);
 });
 

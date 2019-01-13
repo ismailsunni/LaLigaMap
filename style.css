@@ -9,12 +9,12 @@
 .right-align {
     text-align: right;
 }
-#matchday-label {
+.matchday-label {
     line-height: 60px;
 }
 
 #map-page {
-    height: calc(100% - 42px);
+    height: calc(100% - 100px);
 }
 
 #map-content{
