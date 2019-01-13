@@ -6,6 +6,7 @@ const stadiumURL = 'https://api.myjson.com/bins/hxip4';
 const FINISHED = 'FINISHED'
 const IN_PLAY = 'IN_PLAY'
 const SCHEDULED = 'SCHEDULED'
+const PAUSED = 'PAUSED'
 
 // Result / winner
 const HOME_TEAM = 'HOME_TEAM'
@@ -115,6 +116,10 @@ function populateMatchesList(matchday){
             homeTeamScore = currentMatch['score']['fullTime'][homeTeam] + '*';
             awayTeamScore = currentMatch['score']['fullTime'][awayTeam] + '*';
             time = 'Play'
+        }  else if (currentMatch['status'] === PAUSED){
+            homeTeamScore = currentMatch['score']['fullTime'][homeTeam] + '*';
+            awayTeamScore = currentMatch['score']['fullTime'][awayTeam] + '*';
+            time = 'HT'
         }
 
         if (stringifyDate(dateTimeIterator) < stringifyDate(datetime)){
@@ -178,7 +183,7 @@ $(document).on("pagebeforeshow", "#details", function(e){
     var fullTimeScoreString = '? - ?'
     var halfTimeScoreString = '? - ?'
     var winnerString = 'N/A'
-    if (currentMatch['status'] === FINISHED){
+    if (currentMatch['status'] != FINISHED){
         halfTimeScoreString = score['halfTime'][homeTeam] + ' - ' + score['halfTime'][awayTeam];
         fullTimeScoreString = score['fullTime'][homeTeam] + ' - ' + score['fullTime'][awayTeam];
         winnerString = score['winner'];
@@ -191,7 +196,10 @@ $(document).on("pagebeforeshow", "#details", function(e){
         matchStatus = 'Scheduled'
     } else if (currentMatch['status'] === FINISHED){
         matchStatus = 'Finished'
+    } else if (currentMatch['status'] === PAUSED){
+        matchStatus = 'Paused'
     }
+
     // Date and time
     var datetime = new Date(currentMatch['utcDate'])
     var dateFormatOptions = { year: 'numeric', month: 'short', day: 'numeric' };
