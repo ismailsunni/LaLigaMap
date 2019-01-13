@@ -183,7 +183,7 @@ $('#select-matchday').on('change', function() {
 
 $('#select-matchday-map').on('change', function() {
     storage.currentMatchdayMapView = this.value
-    populateMatchesList(storage.currentMatchdayView);
+    populateStadiumMarkers(storage.currentMatchdayMapView);
 });
 
 // Event handler before showing detail page
@@ -253,10 +253,28 @@ $(document).on('pagebeforeshow', '#home', function(){
     });    
 });
 
-// Event handler before showing map page
-$(document).on("pagebeforeshow", "#map-page", function(e){
+function getAllHomeTeamIDs(matchday){
+    var currentMatches = storage.matches[matchday];
+    homeTeamIDs = [];
+    
+    $.each(currentMatches, function(matchID, currentMatch){
+        homeTeamIDs.push(currentMatch[homeTeam]['id']);
+    })
+    return homeTeamIDs;
+}
+
+function populateStadiumMarkers(matchday){
+    var homeTeamIDs = getAllHomeTeamIDs(matchday);
+    console.log(homeTeamIDs)
+    if (storage.stadiumsMarkerGroup != null){
+        storage.stadiumsMarkerGroup.clearLayers();
+    }
+    // Remove existing stadium markers
     storage.stadiumsMarker = []
     $.each(storage.stadiums, function(teamID, stadium){
+        if (homeTeamIDs.indexOf(parseInt(teamID)) < 0){
+            return true;
+        }
         var stadiumPopup = '<h3>' + stadium['Team'] + '</h3>' + 
         '<div>Name: ' + stadium['Stadium'] + '</div>' +
         '<div>Location: ' + stadium['Location'] + '</div>' + 
@@ -265,8 +283,13 @@ $(document).on("pagebeforeshow", "#map-page", function(e){
             [stadium['Latitude'], stadium['Longitude']]).bindPopup(stadiumPopup);
         storage.stadiumsMarker.push(marker)
     });
-    stadiumsMarkerGroup = new L.featureGroup(storage.stadiumsMarker);
-    stadiumsMarkerGroup.addTo(storage.map);
+    storage.stadiumsMarkerGroup = new L.featureGroup(storage.stadiumsMarker);
+    storage.stadiumsMarkerGroup.addTo(storage.map);   
+}
+
+// Event handler before showing map page
+$(document).on("pagebeforeshow", "#map-page", function(e){
+    populateStadiumMarkers(storage.currentMatchdayMapView);
 });
 
 // Event handler after  showing map page

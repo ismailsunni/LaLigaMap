@@ -14,7 +14,7 @@
         ☐ user's geolocation
     ✔ Map for a stadium in match detail @done(19-01-13 15:18)
 ☐ List page
-    ☐ group by date in the list
+    ✔ group by date in the list @done(19-01-13 20:03)
     ✔ handle IN_PLAY status @done(19-01-13 14:28)
     ✔ refresh page @done(19-01-13 15:41)
 ☐ Code
