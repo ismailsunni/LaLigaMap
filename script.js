@@ -72,12 +72,28 @@ function getMatches(){
       });
 }
 
+// Helper function to convert Date object to string date for easier comparison.
+function stringifyDate(dateA){
+    return dateA.getFullYear() * 10000 + (dateA.getMonth() + 1) * 100 + dateA.getDate()
+}
+
 // Populate the list in the selected match day
 function populateMatchesList(matchday){
     // Remove all the previous items
     $('#matchList li').remove();
     var currentMatches = storage.matches[matchday];
+    storage['currentMatches'] = currentMatches
+    var sortedCurrentMatches = []
     $.each(currentMatches, function(matchID, currentMatch){
+        sortedCurrentMatches.push(currentMatch)
+    });
+    // Sorting the matches based on date time
+    sortedCurrentMatches.sort(
+        function(a, b){
+            return (new Date(a['utcDate']) - new Date(b['utcDate']))
+        });
+    var dateTimeIterator = new Date('2000-01-01T00:00:00Z')
+    $.each(sortedCurrentMatches, function(matchID, currentMatch){
         var homeTeamScore = 'unknown';
         var awayTeamScore = 'unknown';
         if (currentMatch['status'] === FINISHED){
@@ -97,6 +113,13 @@ function populateMatchesList(matchday){
         var timeFormatOptions = {hour: '2-digit', minute:'2-digit', hour12: false}
         var date = datetime.toLocaleDateString('en-US', dateFormatOptions)
         var time = datetime.toLocaleTimeString('en-US', timeFormatOptions)
+        if (stringifyDate(dateTimeIterator) < stringifyDate(datetime)){
+            console.log(datetime);
+            dateTimeIterator = datetime;
+            $('#matchList').append(
+            '<li data-role="list-divider">' + date + '</li>'
+            )
+        }
 
         $('#matchList').append(
             '<li><a href="#" class="matchitem" id=' + currentMatch['id'] + '>' + 
