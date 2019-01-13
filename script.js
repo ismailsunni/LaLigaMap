@@ -179,7 +179,12 @@ $(document).on("pagebeforeshow", "#mapPage", function(e){
     console.log('before show map page')
     storage.stadiumsMarker = []
     $.each(storage.stadiums, function(teamID, stadium){
-        var marker = new L.marker([stadium['Latitude'], stadium['Longitude']])
+        var stadiumPopup = '<h3>' + stadium['Team'] + '</h3>' + 
+        '<div>Name: ' + stadium['Stadium'] + '</div>' +
+        '<div>Location: ' + stadium['Location'] + '</div>' + 
+        '<div>Capacity: ' + stadium['Capacity'] + '</div>'
+        var marker = new L.marker(
+            [stadium['Latitude'], stadium['Longitude']]).bindPopup(stadiumPopup);
         storage.stadiumsMarker.push(marker)
     });
     stadiumsMarkerGroup = new L.featureGroup(storage.stadiumsMarker);
