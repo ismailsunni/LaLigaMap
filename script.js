@@ -170,23 +170,47 @@ $(document).on("pagebeforeshow", "#details", function(e){
     var currentMatch = storage.currentMatch;
     var score = currentMatch['score']
     var fullTimeScoreString = '? - ?'
+    var halfTimeScoreString = '? - ?'
     var winnerString = 'N/A'
     if (currentMatch['status'] === FINISHED){
+        halfTimeScoreString = score['halfTime'][homeTeam] + ' - ' + score['halfTime'][awayTeam];
         fullTimeScoreString = score['fullTime'][homeTeam] + ' - ' + score['fullTime'][awayTeam];
         winnerString = score['winner'];
     }
+    // Status
+    var matchStatus = 'N/A'
+    if (currentMatch['status'] === IN_PLAY) {
+        matchStatus = 'Still playing'
+    } else if (currentMatch['status'] === SCHEDULED){
+        matchStatus = 'Scheduled'
+    } else if (currentMatch['status'] === FINISHED){
+        matchStatus = 'Finished'
+    }
+    // Date and time
     var datetime = new Date(currentMatch['utcDate'])
-    var dateFormatOptions = { weekday: 'long', year: 'numeric', month: 'long', day: 'numeric' };
+    var dateFormatOptions = { year: 'numeric', month: 'short', day: 'numeric' };
+    var timeFormatOptions = {hour: '2-digit', minute:'2-digit', hour12: false}
     var date = datetime.toLocaleDateString('en-US', dateFormatOptions)
-    var time = datetime.toLocaleTimeString('en-US')
+    var time = datetime.toLocaleTimeString('en-US', timeFormatOptions)
+
+    // Stadium
+    var currentHomeTeamID = currentMatch[homeTeam]['id']
+    console.log('home team ID: ' + currentHomeTeamID)
+    var stadiumName = storage.stadiums[currentHomeTeamID]['Stadium']
+    var stadiumLocation = storage.stadiums[currentHomeTeamID]['Location']
+    var stadiumCapacity = storage.stadiums[currentHomeTeamID]['Capacity']
 
     $('#date').text(date)
     $('#time').text(time)
     $('#homeTeam').text(currentMatch[homeTeam]['name'])
     $('#awayTeam').text(currentMatch[awayTeam]['name'])
     $('#fullTimeScore').text(fullTimeScoreString)
+    $('#halfTimeScore').text(halfTimeScoreString)
     $('#winner').text(score['winner'])
-    $('#status').text(currentMatch['status'])
+    $('#status').text(matchStatus)
+    $('#stadiumName').text(stadiumName)
+    $('#stadiumLocation').text(stadiumLocation)
+    $('#stadiumCapacity').text(stadiumCapacity)
 });
 
 // Add map
