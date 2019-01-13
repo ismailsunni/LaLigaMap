@@ -9,6 +9,9 @@
 .right-align {
     text-align: right;
 }
+#matchday-label {
+    line-height: 60px;
+}
 
 #map-page {
     height: calc(100% - 42px);
@@ -34,4 +37,5 @@
 }
 .ui-grid-c>.score-cell {
     width: 10%;
+    text-align: right;
 }

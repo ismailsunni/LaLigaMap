@@ -105,21 +105,19 @@ function populateMatchesList(matchday){
 
         $('#matchList').append(
             '<li><a href="#" class="matchitem" id=' + currentMatch['id'] + '>' + 
-            '<div class="ui-grid-c">' + 
-                '<div class="ui-block-a time-cell">' + time + '</div>' + 
-                '<div class="ui-block-b match-cell">' + 
-                    '<div class=ui-grid-solo>' + currentMatch[homeTeam]['name'] + '</div>' + 
-                    '<div class=ui-grid-solo>' + currentMatch[awayTeam]['name'] + '</div>' + 
-                '</div>' + 
-                '<div class="ui-block-c score-cell">' + 
-                    '<div class=ui-grid-solo>' + homeTeamScore + '</div>' + 
-                    '<div class=ui-grid-solo>' + awayTeamScore + '</div>' + 
-            '</div>' + 
+                '<div class="ui-grid-c">' + 
+                    '<div class="ui-block-a time-cell">' + 
+                        time + 
+                    '</div>' + 
+                    '<div class="ui-block-b match-cell">' + 
+                        '<div class=ui-grid-solo>' + currentMatch[homeTeam]['name'] + '</div>' + 
+                        '<div class=ui-grid-solo>' + currentMatch[awayTeam]['name'] + '</div>' + 
+                    '</div>' + 
+                    '<div class="ui-block-c score-cell">' + 
+                        '<div class=ui-grid-solo>' + homeTeamScore + '</div>' + 
+                        '<div class=ui-grid-solo>' + awayTeamScore + '</div>' + 
+                    '</div>' + 
                 '</div>' +
-            '</div' + 
-            // '<div><p><span class="team-name">' + currentMatch[homeTeam]['name'] + '</span><span class="score">' + homeTeamScore + '</span></p>' +
-            // '<p><span class="team-name">' + currentMatch[awayTeam]['name'] + '</span><span class="score">' + awayTeamScore + '</span></p>' +
-            // '</div>' +
             '</a></li>'
         )
     });
@@ -131,7 +129,11 @@ function populateComboBox(){
     $('#select-matchday').empty();
     i = 1;
     while(i <= 38){
-        $('#select-matchday').append('<option value='+ i + '>' + i +'</option>');
+        var currentMatchdayString = i;
+        if (i == storage.currentMatchday) {
+            currentMatchdayString = i + ' (current)'    
+        }
+        $('#select-matchday').append('<option value='+ i + '>' + currentMatchdayString +'</option>');
         i++;
     };
     $("#select-matchday").val(storage.currentMatchdayView).change();

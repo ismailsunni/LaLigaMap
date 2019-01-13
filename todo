@@ -15,7 +15,7 @@
     ☐ Map for a stadium in match detail
 ☐ List page
     ☐ group by date in the list
-    ☐ handle IN_PLAY status
+    ✔ handle IN_PLAY status @done(19-01-13 14:28)
     ☐ refresh page
 ☐ Code
     ✔ move global variable to storage @started(19-01-13 10:24) @done(19-01-13 10:39) @lasted(15m15s)
