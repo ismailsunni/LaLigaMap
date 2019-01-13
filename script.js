@@ -270,6 +270,7 @@ function populateStadiumMarkers(matchday){
     }
     // Remove existing stadium markers
     storage.stadiumsMarker = []
+    storage.stadiumsMarkerGroup = new L.markerClusterGroup();
     $.each(storage.stadiums, function(teamID, stadium){
         if (homeTeamIDs.indexOf(parseInt(teamID)) < 0){
             return true;
@@ -281,8 +282,9 @@ function populateStadiumMarkers(matchday){
         var marker = new L.marker(
             [stadium['Latitude'], stadium['Longitude']]).bindPopup(stadiumPopup);
         storage.stadiumsMarker.push(marker)
+        storage.stadiumsMarkerGroup.addLayer(marker)
     });
-    storage.stadiumsMarkerGroup = new L.featureGroup(storage.stadiumsMarker);
+    
     storage.stadiumsMarkerGroup.addTo(storage.map);   
 }
 
