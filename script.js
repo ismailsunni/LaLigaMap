@@ -16,6 +16,7 @@ const DRAW = 'DRAW'
 const homeTeam = 'homeTeam'
 const awayTeam = 'awayTeam'
 
+// Storage for abstraction
 var storage = {
     matches: {},
     currentMatchday: 1,
@@ -27,23 +28,18 @@ var storage = {
     stadiumsMarkerGroup: null
 }
 
-$.getJSON(stadiumURL, function(data){
-    // console.log(data);
-    storage.stadiums = data;
-});
-
+// Helper function to set a header in a request
 function setHeader(xhr) {
     xhr.setRequestHeader('X-Auth-Token', key);
 }
-// Get matches on the current matchday
+
+// Retrieve matches data for the current season
 function getMatches(){
     return $.ajax({
         url: footballDataBaseURL,
         type: 'GET',
         dataType: 'json',
         success: function(response) {
-            console.log('ajax success');
-            console.log(response);
             storage.matches = {}
             storage.currentMatchday = response['matches'][0]['season']['currentMatchday'];
             if (storage.currentMatchdayView < 1){
@@ -75,6 +71,8 @@ function getMatches(){
         beforeSend: setHeader
       });
 }
+
+// Populate the list in the selected match day
 function populateMatchesList(matchday){
     // Remove all the previous items
     $('#matchList li').remove();
@@ -94,8 +92,6 @@ function populateMatchesList(matchday){
         }
 
         // Date and Time
-        // Date
-        // Time
         var datetime = new Date(currentMatch['utcDate'])
         var dateFormatOptions = { weekday: 'long', year: 'numeric', month: 'long', day: 'numeric' };
         var timeFormatOptions = {hour: '2-digit', minute:'2-digit', hour12: false}
@@ -123,6 +119,8 @@ function populateMatchesList(matchday){
     // Refresh the list (important)
     $('#matchList').listview('refresh');
 }
+
+// Shortcut to populate combo box for choosing matchday
 function populateComboBox(){
     $('#select-matchday').empty();
     i = 1;
@@ -136,26 +134,14 @@ function populateComboBox(){
     };
     $("#select-matchday").val(storage.currentMatchdayView).change();
 }
+
+// Event handler for matchday select
 $('#select-matchday').on('change', function() {
     storage.currentMatchdayView = this.value
     populateMatchesList(storage.currentMatchdayView);
 });
-$.when(getMatches()).done(function(data, textStatus, jqXHR){
-    populateMatchesList(storage.currentMatchdayView);
-    populateComboBox();
-});
-$(document).on('pagebeforeshow', '#home', function(){       
-    $(document).on('click', '.matchitem', function(e){     
-        // store some data
-        console.log(e.target.id)
-        var currentMatchID = e.target.id
-        storage.currentMatch = storage.matches[storage.currentMatchdayView][currentMatchID]
-        console.log(storage.currentMatch);
-        // Change page
-        $.mobile.changePage('#details')
-    });    
-});
-// Event to populate UI of details
+
+// Event handler before showing detail page
 $(document).on("pagebeforeshow", "#details", function(e){
     // Stop more events
     e.preventDefault(); 
@@ -188,11 +174,11 @@ $(document).on("pagebeforeshow", "#details", function(e){
 
     // Stadium
     var currentHomeTeamID = currentMatch[homeTeam]['id']
-    console.log('home team ID: ' + currentHomeTeamID)
     var stadiumName = storage.stadiums[currentHomeTeamID]['Stadium']
     var stadiumLocation = storage.stadiums[currentHomeTeamID]['Location']
     var stadiumCapacity = storage.stadiums[currentHomeTeamID]['Capacity']
 
+    // Set text to the elements
     $('#date').text(date)
     $('#time').text(time)
     $('#homeTeam').text(currentMatch[homeTeam]['name'])
@@ -205,19 +191,20 @@ $(document).on("pagebeforeshow", "#details", function(e){
     $('#stadiumLocation').text(stadiumLocation)
     $('#stadiumCapacity').text(stadiumCapacity)
 });
-// Add map
-storage.map = L.map('map').setView([41.278, -2.505], 5);
 
-// add an OpenStreetMap tile layer
-L.tileLayer('https://{s}.tile.osm.org/{z}/{x}/{y}.png', {
-    attribution: '&copy; <a href="http://osm.org/copyright">OpenStreetMap</a> contributors'
-}).addTo(storage.map);
-$(document).on("pageshow", "#map-page", function(e){
-    console.log(storage.stadiums)
-    storage.map.invalidateSize();
+// Event handler on list item clicked
+$(document).on('pagebeforeshow', '#home', function(){       
+    $(document).on('click', '.matchitem', function(e){     
+        // store some data
+        var currentMatchID = e.target.id
+        storage.currentMatch = storage.matches[storage.currentMatchdayView][currentMatchID]
+        // Change page
+        $.mobile.changePage('#details')
+    });    
 });
+
+// Event handler before showing map page
 $(document).on("pagebeforeshow", "#map-page", function(e){
-    console.log('before show map page')
     storage.stadiumsMarker = []
     $.each(storage.stadiums, function(teamID, stadium){
         var stadiumPopup = '<h3>' + stadium['Team'] + '</h3>' + 
@@ -232,8 +219,12 @@ $(document).on("pagebeforeshow", "#map-page", function(e){
     stadiumsMarkerGroup.addTo(storage.map);
 });
 
+// Event handler after  showing map page
+$(document).on("pageshow", "#map-page", function(e){
+    storage.map.invalidateSize();
+});
 
-// Refresh button event
+// Event handler for refresh button
 $(document).on("click", "#refresh", function(){
     // Prevent the usual navigation behavior
     event.preventDefault();
@@ -243,3 +234,22 @@ $(document).on("click", "#refresh", function(){
         populateComboBox();
     });
 });
+
+// Get stadium data
+$.getJSON(stadiumURL, function(data){
+    storage.stadiums = data;
+});
+
+// Retrieve matches data and populate list and combo box
+$.when(getMatches()).done(function(data, textStatus, jqXHR){
+    populateMatchesList(storage.currentMatchdayView);
+    populateComboBox();
+});
+
+// Add map
+storage.map = L.map('map').setView([41.278, -2.505], 5);
+
+// Add an OpenStreetMap tile layer
+L.tileLayer('https://{s}.tile.osm.org/{z}/{x}/{y}.png', {
+    attribution: '&copy; <a href="http://osm.org/copyright">OpenStreetMap</a> contributors'
+}).addTo(storage.map);
