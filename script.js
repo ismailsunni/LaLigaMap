@@ -1,6 +1,6 @@
 const footballDataBaseURL = 'https://api.football-data.org/v2/competitions/PD/matches'
 const key = '5f7fcfcba01f48fe8916b6b6e1eb81bd'
-const stadiumURL = 'https://api.myjson.com/bins/hxip4';
+const stadiumURL = 'https://raw.githubusercontent.com/ismailsunni/LaLigaMap/master/laliga2018stadium.json';
 
 // Match status
 const FINISHED = 'FINISHED'
